@@ -2,16 +2,21 @@ package com.praharsh.CafeManagement.services.admin;
 
 import com.praharsh.CafeManagement.dtos.CategoryDto;
 import com.praharsh.CafeManagement.dtos.ProductDto;
+import com.praharsh.CafeManagement.dtos.ReservationDto;
 import com.praharsh.CafeManagement.entities.Category;
 import com.praharsh.CafeManagement.entities.Product;
+import com.praharsh.CafeManagement.entities.Reservation;
+import com.praharsh.CafeManagement.enums.ReservationStatus;
 import com.praharsh.CafeManagement.repositries.CategoryRepository;
 import com.praharsh.CafeManagement.repositries.ProductRepo;
+import com.praharsh.CafeManagement.repositries.ReservationRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -21,6 +26,7 @@ public class AdminServiceImpl implements AdminService {
 
     private final CategoryRepository categoryRepository;
     private final ProductRepo productRepo;
+    private final ReservationRepo reservationRepo;
 
     @Override
     public CategoryDto postCategory(CategoryDto categoryDto) throws IOException {
@@ -116,6 +122,29 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<ProductDto> getAllProducts() {
         return productRepo.findAll().stream().map(Product::getProductDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ReservationDto> getReservations() {
+        return reservationRepo.findAll().stream().map(Reservation::getReservationDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public ReservationDto changeReservationStatus(Long reservationId, String status) {
+        Optional<Reservation> optionalReservation = reservationRepo.findById(reservationId);
+        if(optionalReservation.isPresent()){
+            Reservation reservation = optionalReservation.get();
+            if(Objects.equals(status,"Approve")){
+                reservation.setReservationStatus(ReservationStatus.APPROVED);
+            }else{
+                reservation.setReservationStatus(ReservationStatus.DISAPPROVED);
+            }
+            Reservation updatedReservation = reservationRepo.save(reservation);
+            ReservationDto updatedreservationDto = new ReservationDto();
+            updatedreservationDto.setId(updatedReservation.getId());
+            return updatedreservationDto;
+        }
+        return null;
     }
     //Learn about stream(), map()
 }

@@ -2,6 +2,7 @@ package com.praharsh.CafeManagement.services.admin;
 
 import com.praharsh.CafeManagement.dtos.CategoryDto;
 import com.praharsh.CafeManagement.dtos.ProductDto;
+import com.praharsh.CafeManagement.dtos.ReservationDto;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,4 +27,8 @@ public interface AdminService {
     ProductDto updateProduct(Long productId, ProductDto productDto) throws IOException;
 
     List<ProductDto> getAllProducts();
+
+    List<ReservationDto> getReservations();
+
+    ReservationDto changeReservationStatus(Long reservationId, String status);
 }
