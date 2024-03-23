@@ -2,6 +2,7 @@ package com.praharsh.CafeManagement.controllers;
 
 import com.praharsh.CafeManagement.dtos.CategoryDto;
 import com.praharsh.CafeManagement.dtos.ProductDto;
+import com.praharsh.CafeManagement.dtos.ReservationDto;
 import com.praharsh.CafeManagement.services.admin.AdminServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -94,6 +95,22 @@ public class AdminController {
         if(productDtoList == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(productDtoList);
     }
+
+    @GetMapping("/reservations")
+    public ResponseEntity<List<ReservationDto>> getReservations(){
+        List<ReservationDto> reservationDtoList = adminService.getReservations();
+        if(reservationDtoList == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(reservationDtoList);
+    }
+
+    @GetMapping("/reservations/{reservationId}/{status}")
+    public ResponseEntity<ReservationDto> changeReservationStatus(@PathVariable Long reservationId, @PathVariable String status){
+        ReservationDto reservationDto = adminService.changeReservationStatus(reservationId,status);
+        if(reservationDto == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(reservationDto);
+    }
+
+
 
 
 
