@@ -27,6 +27,13 @@ public class CustomerController{
         return ResponseEntity.ok(categoryDtoList);
     }
 
+    @GetMapping("/categories/{title}")
+    public ResponseEntity<List<CategoryDto>> getAllCategories(@PathVariable String title){
+        List<CategoryDto> categoryDtoList = customerService.getCategoriesByName(title);
+        if(categoryDtoList == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(categoryDtoList);
+    }
+
 
     @PostMapping("/reservation")
     public ResponseEntity<?> postReservation(@RequestBody ReservationDto reservationDto){

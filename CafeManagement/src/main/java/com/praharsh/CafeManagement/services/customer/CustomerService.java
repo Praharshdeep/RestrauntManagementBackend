@@ -12,4 +12,5 @@ public interface CustomerService {
 
     List<CategoryDto> getAllCategories();
 
+    List<CategoryDto> getCategoriesByName(String title);
 }
