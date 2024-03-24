@@ -1,9 +1,11 @@
 package com.praharsh.CafeManagement.controllers;
 
+import com.praharsh.CafeManagement.dtos.CategoryDto;
 import com.praharsh.CafeManagement.dtos.ReservationDto;
 import com.praharsh.CafeManagement.services.customer.CustomerService;
 import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +16,17 @@ import java.util.List;
 @RequestMapping("/api/customer")
 @RequiredArgsConstructor
 @CrossOrigin
-public class CustomerController {
+public class CustomerController{
 
-    private final CustomerService customerService;
+    private final CustomerService customerService ;
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<CategoryDto>> getAllCategories(){
+        List<CategoryDto> categoryDtoList = customerService.getAllCategories();
+        if(categoryDtoList == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(categoryDtoList);
+    }
+
 
     @PostMapping("/reservation")
     public ResponseEntity<?> postReservation(@RequestBody ReservationDto reservationDto){
