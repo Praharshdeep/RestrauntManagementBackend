@@ -124,10 +124,7 @@ public class AdminServiceImpl implements AdminService {
         return productRepo.findAll().stream().map(Product::getProductDto).collect(Collectors.toList());
     }
 
-    @Override
-    public List<ReservationDto> getReservations() {
-        return reservationRepo.findAll().stream().map(Reservation::getReservationDto).collect(Collectors.toList());
-    }
+
 
     @Override
     public ReservationDto changeReservationStatus(Long reservationId, String status) {
