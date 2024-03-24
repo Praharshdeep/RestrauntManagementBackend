@@ -52,13 +52,13 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public List<ReservationDto> getReservationByUser(Long customerId) {
-        return reservationRepo.findAllByUserId(customerId).stream().map(Reservation::getReservationDto).collect(Collectors.toList());
+    public List<CategoryDto> getAllCategories() {
+        return categoryRepository.findAll().stream().map(Category::getCategoryDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<CategoryDto> getAllCategories() {
-        return categoryRepository.findAll().stream().map(Category::getCategoryDto).collect(Collectors.toList());
+    public List<ReservationDto> getReservationByUser(Long customerId) {
+        return reservationRepo.findAllByUserId(customerId).stream().map(Reservation::getReservationDto).collect(Collectors.toList());
     }
 
     @Override
@@ -69,5 +69,10 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public List<ProductDto> getProductsByCategory(Long categoryId) {
         return productRepo.findAllByCategoryId(categoryId).stream().map(Product::getProductDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDto> getProductsByCategoryAndTitle(String title, Long categoryId) {
+        return productRepo.findAllByCategoryIdAndNameContaining(categoryId,title).stream().map(Product :: getProductDto).collect(Collectors.toList());
     }
 }

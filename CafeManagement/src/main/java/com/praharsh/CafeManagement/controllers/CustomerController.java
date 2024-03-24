@@ -42,6 +42,12 @@ public class CustomerController{
         return ResponseEntity.ok(productDtoList);
     }
 
+    @GetMapping("/{categoryId}/product/{title}")
+    public ResponseEntity<List<ProductDto>> getProductsByCategoryAndTitle(@PathVariable String title,@PathVariable Long categoryId){
+        List<ProductDto> productDtoList = customerService.getProductsByCategoryAndTitle(title,categoryId);
+        if(productDtoList == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(productDtoList);
+    }
 
     @PostMapping("/reservation")
     public ResponseEntity<?> postReservation(@RequestBody ReservationDto reservationDto){
