@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.util.List;
 
 public interface AdminService {
-//    CategoryDto postCategory(CategoryDto categoryDto) throws IOException;
-//
-//    List<CategoryDto> getAllCategories();
-//
-//    List<CategoryDto> getAllCategoriesByTitle(String title);
+    CategoryDto postCategory(CategoryDto categoryDto) throws IOException;
+
+    List<CategoryDto> getAllCategories();
+
+    List<CategoryDto> getAllCategoriesByTitle(String title);
 
     ProductDto postProduct(Long categoryID, ProductDto productDto) throws IOException;
 
@@ -20,11 +20,11 @@ public interface AdminService {
 
     List<ProductDto> getProductsByCategoryAndTitle(String title, Long categoryId);
 
-//    void deleteProduct(Long productId);
-//
-//    ProductDto getProductsById(Long productId);
-//
-//    ProductDto updateProduct(Long productId, ProductDto productDto) throws IOException;
+    void deleteProduct(Long productId);
+
+    ProductDto getProductsById(Long productId);
+
+    ProductDto updateProduct(Long productId, ProductDto productDto) throws IOException;
 
     List<ProductDto> getAllProducts();
 
