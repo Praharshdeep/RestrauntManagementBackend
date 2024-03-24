@@ -1,8 +1,10 @@
 package com.praharsh.CafeManagement.services.customer;
 
 import com.praharsh.CafeManagement.dtos.CategoryDto;
+import com.praharsh.CafeManagement.dtos.ProductDto;
 import com.praharsh.CafeManagement.dtos.ReservationDto;
 import com.praharsh.CafeManagement.entities.Category;
+import com.praharsh.CafeManagement.entities.Product;
 import com.praharsh.CafeManagement.entities.Reservation;
 import com.praharsh.CafeManagement.entities.User;
 import com.praharsh.CafeManagement.enums.ReservationStatus;
@@ -50,17 +52,27 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public List<ReservationDto> getReservationByUser(Long customerId) {
-        return reservationRepo.findAllByUserId(customerId).stream().map(Reservation::getReservationDto).collect(Collectors.toList());
-    }
-
-    @Override
     public List<CategoryDto> getAllCategories() {
         return categoryRepository.findAll().stream().map(Category::getCategoryDto).collect(Collectors.toList());
     }
 
     @Override
+    public List<ReservationDto> getReservationByUser(Long customerId) {
+        return reservationRepo.findAllByUserId(customerId).stream().map(Reservation::getReservationDto).collect(Collectors.toList());
+    }
+
+    @Override
     public List<CategoryDto> getCategoriesByName(String title) {
         return categoryRepository.findAllByNameContaining(title).stream().map(Category::getCategoryDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDto> getProductsByCategory(Long categoryId) {
+        return productRepo.findAllByCategoryId(categoryId).stream().map(Product::getProductDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDto> getProductsByCategoryAndTitle(String title, Long categoryId) {
+        return productRepo.findAllByCategoryIdAndNameContaining(categoryId,title).stream().map(Product :: getProductDto).collect(Collectors.toList());
     }
 }

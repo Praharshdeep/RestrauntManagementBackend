@@ -1,6 +1,7 @@
 package com.praharsh.CafeManagement.controllers;
 
 import com.praharsh.CafeManagement.dtos.CategoryDto;
+import com.praharsh.CafeManagement.dtos.ProductDto;
 import com.praharsh.CafeManagement.dtos.ReservationDto;
 import com.praharsh.CafeManagement.services.customer.CustomerService;
 import jdk.jfr.Category;
@@ -34,6 +35,19 @@ public class CustomerController{
         return ResponseEntity.ok(categoryDtoList);
     }
 
+    @GetMapping("/{categoryId}/products")
+    public ResponseEntity<List<ProductDto>> getProductsByCategory(@PathVariable Long categoryId){
+        List<ProductDto> productDtoList = customerService.getProductsByCategory(categoryId);
+        if(productDtoList == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(productDtoList);
+    }
+
+    @GetMapping("/{categoryId}/product/{title}")
+    public ResponseEntity<List<ProductDto>> getProductsByCategoryAndTitle(@PathVariable String title,@PathVariable Long categoryId){
+        List<ProductDto> productDtoList = customerService.getProductsByCategoryAndTitle(title,categoryId);
+        if(productDtoList == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(productDtoList);
+    }
 
     @PostMapping("/reservation")
     public ResponseEntity<?> postReservation(@RequestBody ReservationDto reservationDto){
