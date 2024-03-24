@@ -45,7 +45,37 @@ public class AdminServiceImpl implements AdminService {
         return createdCategoryDto;
     }
 
+    @Override
+    public List<CategoryDto> getAllCategories() {
+        return categoryRepository.findAll().stream().map(Category::getCategoryDto).collect(Collectors.toList());
+    }
 
+    @Override
+    public List<CategoryDto> getAllCategoriesByTitle(String title) {
+        return categoryRepository.findAllByNameContaining(title).stream().map(Category::getCategoryDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDto postProduct(Long categoryID, ProductDto productDto) throws IOException {
+        Optional<Category> optionalCategory= categoryRepository.findById(categoryID);
+        if(optionalCategory.isPresent()){
+            Product product = new Product();
+            BeanUtils.copyProperties(productDto,product);
+            //This method copies all the attributes of productDto in product
+            product.setImg(productDto.getImg().getBytes()); //Same old Line
+            product.setCategory(optionalCategory.get());
+            Product createdProduct = productRepo.save(product);
+            ProductDto createdProductDto = new ProductDto();
+            createdProductDto.setId(createdProduct.getId());
+            return createdProductDto;
+        }
+        return null;
+    }
+
+    @Override
+    public List<ProductDto> getAllProductByCategory(Long categoryId) {
+        return productRepo.findAllByCategoryId(categoryId).stream().map(Product :: getProductDto).collect(Collectors.toList());
+    }
 
     @Override
     public List<ProductDto> getProductsByCategoryAndTitle(String title, Long categoryId) {
