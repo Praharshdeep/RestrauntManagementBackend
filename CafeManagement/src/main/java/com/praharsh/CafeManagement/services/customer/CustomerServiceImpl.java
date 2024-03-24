@@ -1,9 +1,13 @@
 package com.praharsh.CafeManagement.services.customer;
 
+import com.praharsh.CafeManagement.dtos.CategoryDto;
 import com.praharsh.CafeManagement.dtos.ReservationDto;
+import com.praharsh.CafeManagement.entities.Category;
 import com.praharsh.CafeManagement.entities.Reservation;
 import com.praharsh.CafeManagement.entities.User;
 import com.praharsh.CafeManagement.enums.ReservationStatus;
+import com.praharsh.CafeManagement.repositries.CategoryRepository;
+import com.praharsh.CafeManagement.repositries.ProductRepo;
 import com.praharsh.CafeManagement.repositries.ReservationRepo;
 import com.praharsh.CafeManagement.repositries.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +22,9 @@ import java.util.stream.Collectors;
 public class CustomerServiceImpl implements CustomerService{
 
     private final UserRepo userRepo;
+
+    private final CategoryRepository categoryRepository;
+    private final ProductRepo productRepo;
     private final ReservationRepo reservationRepo;
 
     @Override
@@ -45,5 +52,10 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public List<ReservationDto> getReservationByUser(Long customerId) {
         return reservationRepo.findAllByUserId(customerId).stream().map(Reservation::getReservationDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CategoryDto> getAllCategories() {
+        return categoryRepository.findAll().stream().map(Category::getCategoryDto).collect(Collectors.toList());
     }
 }
