@@ -19,14 +19,14 @@ import java.util.List;
 public class AdminController {
     private final AdminServiceImpl adminService;
 
-//    @PostMapping("/category")
-//    public ResponseEntity<?> postCategory(@ModelAttribute CategoryDto categoryDto) throws IOException {
-//    CategoryDto createdDto = adminService.postCategory(categoryDto);
-//        if (createdDto == null) {
-//            return new ResponseEntity<>("Category not Created. Come again later", HttpStatus.BAD_REQUEST);
-//        }
-//    return new ResponseEntity<>(createdDto, HttpStatus.CREATED);
-//    }
+    @PostMapping("/category")
+    public ResponseEntity<?> postCategory(@ModelAttribute CategoryDto categoryDto) throws IOException {
+    CategoryDto createdDto = adminService.postCategory(categoryDto);
+        if (createdDto == null) {
+            return new ResponseEntity<>("Category not Created. Come again later", HttpStatus.BAD_REQUEST);
+        }
+    return new ResponseEntity<>(createdDto, HttpStatus.CREATED);
+    }
 
     @GetMapping("/categories")
     public ResponseEntity<List<CategoryDto>> getAllCategories(){
@@ -53,12 +53,12 @@ public class AdminController {
         return new ResponseEntity<>(createdDto, HttpStatus.CREATED);
     }
 
-//    @GetMapping("/{categoryId}/products")
-//    public ResponseEntity<List<ProductDto>> getAllProductByCategory(@PathVariable Long categoryId){
-//        List<ProductDto> productDtoList = adminService.getAllProductByCategory(categoryId);
-//        if(productDtoList == null) return ResponseEntity.notFound().build();
-//        return ResponseEntity.ok(productDtoList);
-//    }
+    @GetMapping("/{categoryId}/products")
+    public ResponseEntity<List<ProductDto>> getAllProductByCategory(@PathVariable Long categoryId){
+        List<ProductDto> productDtoList = adminService.getAllProductByCategory(categoryId);
+        if(productDtoList == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(productDtoList);
+    }
 
     @GetMapping("/{categoryId}/product/{title}")
     public ResponseEntity<List<ProductDto>> getProductsByCategoryAndTitle(@PathVariable String title,@PathVariable Long categoryId){
@@ -67,11 +67,11 @@ public class AdminController {
         return ResponseEntity.ok(productDtoList);
     }
 
-//    @DeleteMapping("/product/{productId}")
-//    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId){
-//        adminService.deleteProduct(productId);
-//        return ResponseEntity.noContent().build();
-//    }
+    @DeleteMapping("/product/{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId){
+        adminService.deleteProduct(productId);
+        return ResponseEntity.noContent().build();
+    }
 
     @GetMapping("/product/{productId}")
     public ResponseEntity<ProductDto> getProductsById(@PathVariable Long productId){
@@ -80,21 +80,21 @@ public class AdminController {
         return ResponseEntity.ok(productDto);
     }
 
-//    @PutMapping("/product/{productId}")
-//    public ResponseEntity<?> updateProduct(@PathVariable Long productId,@ModelAttribute ProductDto productDto) throws IOException {
-//        ProductDto updatedProduct = adminService.updateProduct(productId,productDto);
-//        if (updatedProduct == null) {
-//            return new ResponseEntity<>("Category not Created. Come again later", HttpStatus.BAD_REQUEST);
-//        }
-//        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
-//    }
+    @PutMapping("/product/{productId}")
+    public ResponseEntity<?> updateProduct(@PathVariable Long productId,@ModelAttribute ProductDto productDto) throws IOException {
+        ProductDto updatedProduct = adminService.updateProduct(productId,productDto);
+        if (updatedProduct == null) {
+            return new ResponseEntity<>("Category not Created. Come again later", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+    }
 
-//    @GetMapping("/products")
-//    public ResponseEntity<List<ProductDto>> getAllProducts(){
-//        List<ProductDto> productDtoList = adminService.getAllProducts();
-//        if(productDtoList == null) return ResponseEntity.notFound().build();
-//        return ResponseEntity.ok(productDtoList);
-//    }
+    @GetMapping("/products")
+    public ResponseEntity<List<ProductDto>> getAllProducts(){
+        List<ProductDto> productDtoList = adminService.getAllProducts();
+        if(productDtoList == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(productDtoList);
+    }
 
     @GetMapping("/reservations")
     public ResponseEntity<List<ReservationDto>> getReservations(){

@@ -42,15 +42,15 @@ public class AuthController {
         this.userRepo = userRepo;
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> signupUser(@RequestBody Signuprequest signuprequest) {
-        UserDto createdUserDto = authService.createUser(signuprequest);
-
-        if (createdUserDto == null) {
-            return new ResponseEntity<>("User not Created. Come again later", HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(createdUserDto, HttpStatus.CREATED);
-    }
+//    @PostMapping("/signup")
+//    public ResponseEntity<?> signupUser(@RequestBody Signuprequest signuprequest) {
+//        UserDto createdUserDto = authService.createUser(signuprequest);
+//
+//        if (createdUserDto == null) {
+//            return new ResponseEntity<>("User not Created. Come again later", HttpStatus.BAD_REQUEST);
+//        }
+//        return new ResponseEntity<>(createdUserDto, HttpStatus.CREATED);
+//    }
 
     @PostMapping("/login")
     public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws IOException {
